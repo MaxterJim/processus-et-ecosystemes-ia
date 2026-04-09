@@ -11,8 +11,14 @@
 | 2a | &nbsp;&nbsp;&nbsp;↳ [Identifier le bon problème](#section-2) |
 | 2b | &nbsp;&nbsp;&nbsp;↳ [Définir les métriques de succès](#section-2) |
 | 3 | [Phase 2 — Collecte et exploration des données](#section-3) |
-| 3a | &nbsp;&nbsp;&nbsp;↳ [Sources de données](#section-3) |
-| 3b | &nbsp;&nbsp;&nbsp;↳ [Analyse exploratoire (EDA)](#section-3) |
+| 3a | &nbsp;&nbsp;&nbsp;↳ [Vue d'ensemble des sources](#section-3) |
+| 3b | &nbsp;&nbsp;&nbsp;↳ [Kaggle et dépôts de datasets](#section-3) |
+| 3c | &nbsp;&nbsp;&nbsp;↳ [APIs — collecter des données en temps réel](#section-3) |
+| 3d | &nbsp;&nbsp;&nbsp;↳ [Web scraping](#section-3) |
+| 3e | &nbsp;&nbsp;&nbsp;↳ [Open data — données ouvertes](#section-3) |
+| 3f | &nbsp;&nbsp;&nbsp;↳ [Bases de données internes](#section-3) |
+| 3g | &nbsp;&nbsp;&nbsp;↳ [Capteurs et IoT](#section-3) |
+| 3h | &nbsp;&nbsp;&nbsp;↳ [Analyse exploratoire (EDA)](#section-3) |
 | 4 | [Phase 3 — Préparation et ingénierie des données](#section-4) |
 | 4a | &nbsp;&nbsp;&nbsp;↳ [Nettoyage des données](#section-4) |
 | 4b | &nbsp;&nbsp;&nbsp;↳ [Feature engineering](#section-4) |
@@ -212,16 +218,731 @@ Il est essentiel de définir **avant** le projet comment on mesurera le succès.
 
 ---
 
-### Sources de données
+### Vue d'ensemble des sources
 
-| Type | Exemples | Avantages | Inconvénients |
-|------|---------|-----------|---------------|
-| **Données internes** | Base de données client, logs, ERP | Pertinentes, accessibles | Souvent non structurées |
-| **Données ouvertes** | Kaggle, data.gouv.fr, UCI ML Repo | Gratuites, prêtes à l'emploi | Pas toujours représentatives |
-| **APIs externes** | Twitter API, OpenWeather, Eurostat | Actualisées, riches | Coûteuses, limites d'usage |
-| **Web scraping** | Articles web, avis clients | Volume élevé | Questions légales, bruit |
-| **Données synthétiques** | Générées par IA (GANs, LLMs) | Illimitées, contrôlées | Peuvent introduire des biais |
-| **Données annotées** | Étiquetées par humains | Haute qualité | Coûteuses et lentes |
+```mermaid
+flowchart TD
+    SOURCES["Sources de données pour un projet IA"]
+
+    SOURCES --> K["Kaggle &\ndépôts de datasets"]
+    SOURCES --> API["APIs\n(temps réel)"]
+    SOURCES --> WS["Web scraping"]
+    SOURCES --> OD["Open data\n(données ouvertes)"]
+    SOURCES --> DB["Bases de données\ninternes"]
+    SOURCES --> IOT["Capteurs\n& IoT"]
+    SOURCES --> SYN["Données\nsynthétiques"]
+
+    K --> K1["Compétitions ML\nDatasets publics\nNotebooks"]
+    API --> A1["REST APIs\nStreaming APIs\nWebhooks"]
+    WS --> W1["HTML scraping\nPDF extraction\nImages"]
+    OD --> O1["Gouvernements\nOrganismes publics\nRecherche"]
+    DB --> D1["SQL / NoSQL\nData warehouses\nLogs applicatifs"]
+    IOT --> I1["Capteurs industriels\nWearables\nStations météo"]
+    SYN --> S1["GANs\nLLMs\nSimulations"]
+```
+
+| Source | Volume typique | Coût | Fraîcheur | Qualité |
+|--------|---------------|------|-----------|---------|
+| **Kaggle / dépôts** | Moyen à grand | Gratuit | Variable | Bonne à très bonne |
+| **APIs** | Petit à très grand | Gratuit à élevé | Temps réel | Très bonne |
+| **Web scraping** | Très grand | Faible | Temps réel | Variable (bruit) |
+| **Open data** | Moyen à grand | Gratuit | Variable | Bonne |
+| **Bases internes** | Petit à très grand | Nul | Temps réel | Variable |
+| **Capteurs / IoT** | Très grand | Infrastructure | Temps réel | Bonne si calibrés |
+| **Synthétiques** | Illimité | Faible | N/A | Contrôlée |
+
+---
+
+### Kaggle et dépôts de datasets
+
+**Kaggle** ([kaggle.com](https://www.kaggle.com)) est la plus grande plateforme de data science au monde. Elle regroupe des datasets publics, des compétitions ML et des notebooks partagés par la communauté.
+
+#### Ce que vous trouvez sur Kaggle
+
+| Ressource | Description | Exemple |
+|-----------|-------------|---------|
+| **Datasets** | Fichiers CSV, JSON, images, textes prêts à l'emploi | Titanic, MNIST, House Prices |
+| **Compétitions** | Problèmes réels posés par des entreprises | Détection de fraude, prédiction de maladies |
+| **Notebooks** | Code Python commenté par la communauté | Solutions gagnantes des compétitions |
+| **Modèles** | Modèles pré-entraînés partageables | Fine-tuned BERT, ResNet custom |
+
+#### Télécharger un dataset Kaggle avec l'API
+
+```python
+# Installation
+# pip install kaggle
+
+# 1. Configurer les credentials : ~/.kaggle/kaggle.json
+# {"username": "votre_username", "key": "votre_api_key"}
+
+import kaggle
+
+# Télécharger un dataset
+kaggle.api.dataset_download_files(
+    'uciml/iris',          # username/dataset-name
+    path='./data/',
+    unzip=True
+)
+
+# Télécharger les données d'une compétition
+kaggle.api.competition_download_files(
+    'titanic',
+    path='./data/titanic/'
+)
+
+# Lister les datasets disponibles sur un sujet
+kaggle.api.dataset_list(search='fraud detection')
+```
+
+#### Autres dépôts majeurs de datasets
+
+| Dépôt | URL | Spécialité |
+|-------|-----|-----------|
+| **UCI ML Repository** | archive.ics.uci.edu/ml | Datasets classiques ML (Iris, Wine, Adult...) |
+| **Hugging Face Datasets** | huggingface.co/datasets | NLP, LLMs, multimodal |
+| **Google Dataset Search** | datasetsearch.research.google.com | Moteur de recherche de datasets |
+| **Papers With Code** | paperswithcode.com/datasets | Datasets liés à des articles de recherche |
+| **AWS Open Data** | registry.opendata.aws | Données massives sur AWS S3 |
+| **GitHub** | github.com | Datasets dans des dépôts publics |
+| **Zenodo** | zenodo.org | Données scientifiques et académiques |
+
+```python
+# Charger un dataset Hugging Face directement
+from datasets import load_dataset
+
+# Dataset de classification de texte
+dataset = load_dataset("imdb")
+print(dataset["train"][0])
+
+# Dataset multilingue
+dataset_fr = load_dataset("wikipedia", "20220301.fr", split="train[:1%]")
+
+# Voir les infos
+print(dataset.info)
+print(dataset["train"].features)
+```
+
+---
+
+### APIs — Collecter des données en temps réel
+
+Une **API** (Application Programming Interface) permet d'accéder à des données en temps réel via des requêtes HTTP. C'est la méthode la plus courante pour collecter des données fraîches et structurées.
+
+#### Types d'APIs
+
+```mermaid
+flowchart LR
+    subgraph REST["REST API\n(requête / réponse)"]
+        R1["GET /data\nRécupérer des données"]
+        R2["POST /data\nEnvoyer des données"]
+    end
+    subgraph STREAM["Streaming API\n(flux continu)"]
+        S1["WebSocket\nFlux en temps réel"]
+        S2["Server-Sent Events\nNotifications push"]
+    end
+    subgraph GRAPH["GraphQL\n(requête flexible)"]
+        G1["Query\nDemander exactement\nce dont on a besoin"]
+    end
+```
+
+#### Exemples d'APIs par domaine
+
+| Domaine | API | Données disponibles | Gratuit ? |
+|---------|-----|---------------------|-----------|
+| **Météo** | OpenWeatherMap | Températures, précipitations, prévisions | Oui (limité) |
+| **Finance** | Alpha Vantage, Yahoo Finance | Cours boursiers, indicateurs | Oui (limité) |
+| **Réseaux sociaux** | Reddit API, YouTube Data API | Posts, commentaires, vidéos | Oui (limité) |
+| **Géographie** | OpenStreetMap, Google Maps | Coordonnées, adresses, itinéraires | Oui / Payant |
+| **Actualités** | NewsAPI, GDELT | Articles de presse | Oui (limité) |
+| **Santé** | PubMed API, ClinicalTrials | Articles médicaux, essais cliniques | Oui |
+| **Transport** | GTFS, SNCF API, Translink API | Horaires, retards, positions | Oui |
+| **Gouvernement** | data.gouv.fr API, Statistics Canada | Données publiques officielles | Oui |
+
+#### Collecter des données via une REST API
+
+```python
+import requests
+import pandas as pd
+import time
+
+# Exemple : collecter des données météo pour plusieurs villes
+API_KEY = "votre_cle_openweathermap"
+BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+
+villes = ["Montreal", "Paris", "London", "Tokyo", "New York"]
+records = []
+
+for ville in villes:
+    params = {
+        "q": ville,
+        "appid": API_KEY,
+        "units": "metric",
+        "lang": "fr"
+    }
+    response = requests.get(BASE_URL, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        records.append({
+            "ville": ville,
+            "temperature": data["main"]["temp"],
+            "humidite": data["main"]["humidity"],
+            "description": data["weather"][0]["description"],
+            "vent_kmh": data["wind"]["speed"] * 3.6
+        })
+    else:
+        print(f"Erreur pour {ville} : {response.status_code}")
+
+    time.sleep(0.5)  # respecter la limite de taux
+
+df = pd.DataFrame(records)
+df.to_csv("meteo_villes.csv", index=False)
+print(df)
+```
+
+#### Collecter des données financières (Yahoo Finance)
+
+```python
+import yfinance as yf
+import pandas as pd
+
+# Télécharger l'historique de plusieurs actions
+tickers = ["AAPL", "GOOGL", "MSFT", "NVDA", "META"]
+
+all_data = []
+for ticker in tickers:
+    stock = yf.Ticker(ticker)
+    hist = stock.history(period="2y")   # 2 ans de données
+    hist["ticker"] = ticker
+    hist.reset_index(inplace=True)
+    all_data.append(hist)
+
+df = pd.concat(all_data, ignore_index=True)
+df.to_csv("historique_actions.csv", index=False)
+print(f"Collecté : {len(df)} lignes pour {len(tickers)} actions")
+```
+
+#### Gestion des limites d'API (Rate Limiting)
+
+```python
+import requests
+import time
+from functools import wraps
+
+def retry_on_rate_limit(max_retries=3, wait_seconds=60):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(max_retries):
+                response = func(*args, **kwargs)
+                if response.status_code == 429:  # Too Many Requests
+                    print(f"Limite atteinte. Attente de {wait_seconds}s...")
+                    time.sleep(wait_seconds)
+                elif response.status_code == 200:
+                    return response
+                else:
+                    raise Exception(f"Erreur {response.status_code}")
+            raise Exception("Nombre maximum de tentatives atteint")
+        return wrapper
+    return decorator
+
+@retry_on_rate_limit(max_retries=3, wait_seconds=30)
+def appeler_api(url, params):
+    return requests.get(url, params=params)
+```
+
+---
+
+### Web scraping
+
+Le **web scraping** consiste à extraire automatiquement des données de pages web. C'est utile quand aucune API n'est disponible.
+
+> **Important** : Toujours vérifier les conditions d'utilisation du site (`robots.txt`) et respecter les lois (RGPD, CFAA, etc.) avant de scraper.
+
+#### Vérifier robots.txt
+
+```
+# Exemple de robots.txt — toujours le consulter en premier
+# https://www.exemple.com/robots.txt
+
+User-agent: *
+Disallow: /private/
+Disallow: /admin/
+Allow: /public/
+
+Crawl-delay: 10   # attendre 10 secondes entre les requêtes
+```
+
+```python
+import urllib.robotparser
+
+def scraping_autorise(url_site: str, url_cible: str) -> bool:
+    rp = urllib.robotparser.RobotFileParser()
+    rp.set_url(f"{url_site}/robots.txt")
+    rp.read()
+    return rp.can_fetch("*", url_cible)
+
+# Vérification avant de scraper
+if scraping_autorise("https://www.exemple.com", "https://www.exemple.com/articles/"):
+    print("Scraping autorisé")
+else:
+    print("Scraping interdit — chercher une alternative")
+```
+
+#### Web scraping avec BeautifulSoup
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import time
+
+def scraper_articles(url_base: str, nb_pages: int = 5) -> pd.DataFrame:
+    articles = []
+
+    for page in range(1, nb_pages + 1):
+        url = f"{url_base}?page={page}"
+        headers = {"User-Agent": "Mozilla/5.0 (compatible; DataCollector/1.0)"}
+        response = requests.get(url, headers=headers, timeout=10)
+
+        if response.status_code != 200:
+            print(f"Erreur page {page}: {response.status_code}")
+            continue
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        for article in soup.find_all("article", class_="post"):
+            titre = article.find("h2")
+            date = article.find("time")
+            texte = article.find("p", class_="excerpt")
+
+            if titre and date and texte:
+                articles.append({
+                    "titre": titre.get_text(strip=True),
+                    "date": date.get("datetime", ""),
+                    "extrait": texte.get_text(strip=True),
+                    "url": article.find("a")["href"] if article.find("a") else ""
+                })
+
+        time.sleep(2)   # respecter le serveur
+        print(f"Page {page} traitée — {len(articles)} articles collectés")
+
+    return pd.DataFrame(articles)
+```
+
+#### Scraping dynamique avec Selenium (JavaScript rendu côté client)
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+options = webdriver.ChromeOptions()
+options.add_argument("--headless")   # sans interface graphique
+options.add_argument("--no-sandbox")
+
+driver = webdriver.Chrome(options=options)
+
+try:
+    driver.get("https://www.exemple.com/tableau-dynamique")
+    # Attendre que le tableau soit chargé par JavaScript
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "table.data-table"))
+    )
+    lignes = driver.find_elements(By.CSS_SELECTOR, "table.data-table tbody tr")
+    data = []
+    for ligne in lignes:
+        colonnes = ligne.find_elements(By.TAG_NAME, "td")
+        data.append([col.text for col in colonnes])
+finally:
+    driver.quit()
+```
+
+#### Extraction de texte depuis des PDFs
+
+```python
+import pdfplumber
+import pandas as pd
+
+def extraire_tableaux_pdf(chemin_pdf: str) -> list:
+    tous_les_tableaux = []
+    with pdfplumber.open(chemin_pdf) as pdf:
+        for i, page in enumerate(pdf.pages):
+            # Extraire le texte
+            texte = page.extract_text()
+            # Extraire les tableaux
+            tableaux = page.extract_tables()
+            for tableau in tableaux:
+                df = pd.DataFrame(tableau[1:], columns=tableau[0])
+                df["page_source"] = i + 1
+                tous_les_tableaux.append(df)
+    return tous_les_tableaux
+
+# Utilisation
+tableaux = extraire_tableaux_pdf("rapport_annuel.pdf")
+for t in tableaux:
+    print(t.head())
+```
+
+---
+
+### Open data — Données ouvertes
+
+Les **données ouvertes** sont des données publiées par des gouvernements, organismes publics ou institutions de recherche, librement accessibles et réutilisables.
+
+#### Portails open data majeurs
+
+| Portail | URL | Contenu |
+|---------|-----|---------|
+| **data.gouv.fr** | data.gouv.fr | Données publiques françaises |
+| **open.canada.ca** | open.canada.ca | Données fédérales canadiennes |
+| **statcan.gc.ca** | statcan.gc.ca | Statistiques Canada |
+| **donnees.ville.montreal.qc.ca** | donnees.ville.montreal.qc.ca | Données de la Ville de Montréal |
+| **data.europa.eu** | data.europa.eu | Données de l'Union européenne |
+| **data.worldbank.org** | data.worldbank.org | Indicateurs économiques mondiaux |
+| **ourworldindata.org** | ourworldindata.org | Données mondiales sur la santé, l'énergie, etc. |
+| **NASA Open Data** | data.nasa.gov | Données spatiales et environnementales |
+| **WHO Data** | who.int/data | Données de santé mondiale |
+| **NOAA** | noaa.gov | Données climatiques et océaniques |
+
+#### Télécharger des données de Statistiques Canada
+
+```python
+import requests
+import pandas as pd
+import io
+
+# Télécharger un tableau de Statistiques Canada (format CSV)
+# Exemple : Tableau 14-10-0023-01 — Emploi par industrie
+TABLE_ID = "1410002301"
+URL = f"https://www150.statcan.gc.ca/t1/tbl1/fr/dtbl/csv/{TABLE_ID}.zip"
+
+response = requests.get(URL)
+if response.status_code == 200:
+    import zipfile
+    with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+        with z.open(f"{TABLE_ID}.csv") as f:
+            df = pd.read_csv(f, encoding="utf-8-sig")
+    print(df.head())
+    print(f"Forme : {df.shape}")
+```
+
+#### Données de la Ville de Montréal (CKAN API)
+
+```python
+import requests
+import pandas as pd
+
+# API CKAN — standard pour beaucoup de portails open data
+CKAN_URL = "https://donnees.montreal.ca/api/3/action/datastore_search"
+
+params = {
+    "resource_id": "c7d0546a-a218-479e-bc9f-ce8f13d8818e",  # ID du dataset
+    "limit": 1000,
+    "offset": 0
+}
+
+tous_les_enregistrements = []
+while True:
+    response = requests.get(CKAN_URL, params=params)
+    data = response.json()["result"]
+    enregistrements = data["records"]
+    tous_les_enregistrements.extend(enregistrements)
+    if len(enregistrements) < params["limit"]:
+        break
+    params["offset"] += params["limit"]
+
+df = pd.DataFrame(tous_les_enregistrements)
+print(f"Total collecté : {len(df)} enregistrements")
+```
+
+---
+
+### Bases de données internes
+
+Les données internes sont souvent les plus précieuses pour un projet IA — elles reflètent la réalité spécifique de l'organisation.
+
+#### Types de bases de données internes
+
+```mermaid
+flowchart TD
+    DB["Bases de données\ninternes"]
+    DB --> SQL["Bases SQL\n(PostgreSQL, MySQL,\nSQL Server, SQLite)"]
+    DB --> NOSQL["Bases NoSQL\n(MongoDB, Redis,\nCassandra, DynamoDB)"]
+    DB --> DW["Data Warehouses\n(BigQuery, Snowflake,\nRedshift)"]
+    DB --> LOGS["Logs applicatifs\n(fichiers .log,\nElasticsearch)"]
+    DB --> FILES["Fichiers\n(CSV, Excel, JSON\nParquet, Avro)"]
+    DB --> ERP["ERP / CRM\n(SAP, Salesforce,\nOdoo)"]
+```
+
+#### Connecter et extraire des données SQL
+
+```python
+import pandas as pd
+import sqlalchemy
+
+# Connexion PostgreSQL
+engine = sqlalchemy.create_engine(
+    "postgresql://user:password@localhost:5432/ma_base"
+)
+
+# Extraire des données avec une requête SQL
+query = """
+    SELECT
+        c.client_id,
+        c.age,
+        c.ville,
+        COUNT(t.transaction_id) AS nb_transactions,
+        SUM(t.montant) AS total_depenses,
+        MAX(t.date_transaction) AS derniere_transaction,
+        CASE WHEN MAX(t.date_transaction) > NOW() - INTERVAL '90 days'
+             THEN 1 ELSE 0 END AS actif_90j
+    FROM clients c
+    LEFT JOIN transactions t ON c.client_id = t.client_id
+    WHERE t.date_transaction >= '2023-01-01'
+    GROUP BY c.client_id, c.age, c.ville
+    ORDER BY total_depenses DESC
+"""
+
+df = pd.read_sql(query, engine)
+print(f"Extrait : {len(df)} clients")
+print(df.dtypes)
+```
+
+#### Extraire depuis MongoDB (NoSQL)
+
+```python
+from pymongo import MongoClient
+import pandas as pd
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["ma_base"]
+collection = db["logs_utilisateurs"]
+
+# Requête avec filtres et projection
+pipeline = [
+    {"$match": {
+        "date": {"$gte": "2024-01-01"},
+        "action": {"$in": ["achat", "panier", "vue_produit"]}
+    }},
+    {"$group": {
+        "_id": "$user_id",
+        "nb_actions": {"$sum": 1},
+        "nb_achats": {"$sum": {"$cond": [{"$eq": ["$action", "achat"]}, 1, 0]}},
+        "total_depenses": {"$sum": "$montant"}
+    }},
+    {"$sort": {"nb_achats": -1}},
+    {"$limit": 10000}
+]
+
+resultats = list(collection.aggregate(pipeline))
+df = pd.DataFrame(resultats)
+df.rename(columns={"_id": "user_id"}, inplace=True)
+print(df.head())
+```
+
+#### Lire des fichiers logs
+
+```python
+import re
+import pandas as pd
+from pathlib import Path
+
+# Parser des logs Apache/Nginx
+LOG_PATTERN = r'(\S+) \S+ \S+ \[(.+?)\] "(\S+) (\S+) \S+" (\d+) (\d+)'
+
+def parser_log(chemin_log: str) -> pd.DataFrame:
+    records = []
+    with open(chemin_log, "r") as f:
+        for ligne in f:
+            match = re.match(LOG_PATTERN, ligne)
+            if match:
+                records.append({
+                    "ip": match.group(1),
+                    "date": match.group(2),
+                    "methode": match.group(3),
+                    "url": match.group(4),
+                    "status_code": int(match.group(5)),
+                    "taille_bytes": int(match.group(6))
+                })
+    return pd.DataFrame(records)
+
+df_logs = parser_log("/var/log/nginx/access.log")
+print(f"Requêtes collectées : {len(df_logs)}")
+print(df_logs["status_code"].value_counts())
+```
+
+---
+
+### Capteurs et IoT
+
+Les **capteurs** et appareils **IoT** (Internet of Things) génèrent des flux continus de données en temps réel. Ces données sont souvent utilisées pour la maintenance prédictive, la surveillance environnementale ou la santé.
+
+#### Types de capteurs par domaine
+
+| Domaine | Type de capteur | Données générées | Fréquence |
+|---------|----------------|-----------------|-----------|
+| **Industrie** | Accéléromètres, vibrations | Usure des machines | 100–10 000 Hz |
+| **Environnement** | Température, humidité, CO2 | Qualité de l'air | 1 mesure / minute |
+| **Santé** | Cardiofréquencemètre, oxymètre | Rythme cardiaque, SpO2 | 1–250 Hz |
+| **Transport** | GPS, accéléromètre | Position, vitesse | 1–10 Hz |
+| **Agriculture** | Humidité du sol, luminosité | Conditions de culture | 1 mesure / heure |
+| **Bâtiment** | Compteurs électriques, présence | Consommation d'énergie | 1 mesure / 15 min |
+
+#### Collecter des données de capteurs avec MQTT
+
+```python
+import paho.mqtt.client as mqtt
+import json
+import pandas as pd
+from datetime import datetime
+
+# MQTT est le protocole standard pour l'IoT
+mesures = []
+
+def on_connect(client, userdata, flags, rc):
+    print(f"Connecté au broker MQTT — code {rc}")
+    client.subscribe("capteurs/temperature/#")   # s'abonner à tous les capteurs de T°
+    client.subscribe("capteurs/humidite/#")
+
+def on_message(client, userdata, msg):
+    try:
+        payload = json.loads(msg.payload.decode())
+        mesures.append({
+            "timestamp": datetime.now().isoformat(),
+            "topic": msg.topic,
+            "capteur_id": payload.get("id"),
+            "valeur": payload.get("valeur"),
+            "unite": payload.get("unite"),
+            "latitude": payload.get("lat"),
+            "longitude": payload.get("lon")
+        })
+        if len(mesures) % 100 == 0:
+            print(f"{len(mesures)} mesures collectées")
+    except Exception as e:
+        print(f"Erreur parsing: {e}")
+
+client = mqtt.Client()
+client.on_connect = on_connect
+client.on_message = on_message
+client.connect("broker.hivemq.com", 1883, keepalive=60)
+
+# Collecter pendant 10 minutes
+client.loop_start()
+import time
+time.sleep(600)
+client.loop_stop()
+
+df = pd.DataFrame(mesures)
+df.to_csv("donnees_capteurs.csv", index=False)
+print(f"Total collecté : {len(df)} mesures")
+```
+
+#### Simuler des données de capteurs pour tests
+
+```python
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+
+def simuler_capteur_temperature(
+    nb_heures: int = 720,    # 30 jours
+    freq_minutes: int = 5,
+    capteur_id: str = "CAP_001"
+) -> pd.DataFrame:
+
+    nb_points = nb_heures * 60 // freq_minutes
+    debut = datetime.now() - timedelta(hours=nb_heures)
+    timestamps = [debut + timedelta(minutes=i * freq_minutes) for i in range(nb_points)]
+
+    # Simulation réaliste : tendance journalière + bruit + anomalies
+    heures = np.array([t.hour for t in timestamps])
+    tendance_journaliere = 20 + 8 * np.sin((heures - 6) * np.pi / 12)
+    bruit = np.random.normal(0, 0.5, nb_points)
+
+    # Injecter quelques anomalies (5 % des points)
+    anomalies = np.zeros(nb_points)
+    indices_anomalies = np.random.choice(nb_points, size=int(nb_points * 0.05), replace=False)
+    anomalies[indices_anomalies] = np.random.choice([-15, 15], size=len(indices_anomalies))
+
+    temperatures = tendance_journaliere + bruit + anomalies
+
+    return pd.DataFrame({
+        "timestamp": timestamps,
+        "capteur_id": capteur_id,
+        "temperature_c": temperatures.round(2),
+        "est_anomalie": anomalies != 0
+    })
+
+df_capteur = simuler_capteur_temperature()
+print(df_capteur.head(10))
+print(f"Anomalies simulées : {df_capteur['est_anomalie'].sum()}")
+```
+
+---
+
+### Analyse exploratoire des données (EDA)
+
+L'**EDA** (Exploratory Data Analysis) consiste à comprendre les données avant de modéliser.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("dataset.csv")
+
+# Aperçu général
+print(df.shape)           # dimensions
+print(df.dtypes)          # types de colonnes
+print(df.describe())      # statistiques descriptives
+print(df.isnull().sum())  # valeurs manquantes
+
+# Distribution d'une variable cible
+df["label"].value_counts().plot(kind="bar")
+plt.title("Distribution des classes")
+plt.show()
+
+# Corrélations
+sns.heatmap(df.corr(), annot=True, cmap="coolwarm")
+plt.show()
+```
+
+---
+
+### Questions à poser lors de l'EDA
+
+| Question | Ce qu'on cherche |
+|----------|-----------------|
+| Combien de lignes et de colonnes ? | Taille suffisante pour entraîner |
+| Y a-t-il des valeurs manquantes ? | Stratégie de traitement |
+| Les classes sont-elles équilibrées ? | Risque de biais du modèle |
+| Y a-t-il des outliers ? | Données aberrantes à traiter |
+| Les features sont-elles corrélées ? | Redondance ou multicolinéarité |
+| Les données sont-elles récentes ? | Risque de data drift |
+
+---
+
+### Les problèmes fréquents
+
+```mermaid
+mindmap
+  root((Problèmes\nde données))
+    Quantité
+      Trop peu de données
+      Déséquilibre des classes
+    Qualité
+      Valeurs manquantes
+      Erreurs de saisie
+      Doublons
+    Pertinence
+      Features non informatives
+      Fuite de données (data leakage)
+    Légalité
+      RGPD et données personnelles
+      Biais historiques
+```
 
 ---
 
