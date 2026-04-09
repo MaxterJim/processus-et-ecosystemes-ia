@@ -19,7 +19,7 @@
 | 5 | [Phase 4 — Modélisation et entraînement](#section-5) |
 | 5a | &nbsp;&nbsp;&nbsp;↳ [Choisir le bon algorithme](#section-5) |
 | 5b | &nbsp;&nbsp;&nbsp;↳ [Entraînement et validation](#section-5) |
-| 5c | &nbsp;&nbsp;&nbsp;↳ [Hyperparamètres et optimisation](#section-5) |
+| 5c | &nbsp;&nbsp;&nbsp;↳ [Hyperparamètrès et optimisation](#section-5) |
 | 5d | &nbsp;&nbsp;&nbsp;↳ [Fine-tuning — adapter un modèle pré-entraîné](#section-5) |
 | 6 | [Phase 5 — Évaluation du modèle](#section-6) |
 | 6a | &nbsp;&nbsp;&nbsp;↳ [Métriques d'évaluation](#section-6) |
@@ -169,7 +169,7 @@ Il est essentiel de définir **avant** le projet comment on mesurera le succès.
 | Métrique | Utilisation |
 |----------|------------|
 | **Accuracy** | Classification équilibrée |
-| **Precision / Recall / F1** | Classification déséquilibrée (fraude, maladie) |
+| **précision / Recall / F1** | Classification déséquilibrée (fraude, maladie) |
 | **AUC-ROC** | Comparaison de classifieurs |
 | **RMSE / MAE** | Régression (prédiction de valeurs numériques) |
 | **BLEU / ROUGE** | NLP (traduction, résumé) |
@@ -413,7 +413,7 @@ flowchart TD
 |-----------|------|-----------|---------------|
 | **Régression logistique** | Classification | Rapide, interprétable | Limité aux relations linéaires |
 | **Random Forest** | Class. / Régr. | Robuste, peu de tuning | Boîte noire, lent sur gros volumes |
-| **XGBoost / LightGBM** | Class. / Régr. | Très performant, compétitions Kaggle | Hyperparamètres complexes |
+| **XGBoost / LightGBM** | Class. / Régr. | Très performant, compétitions Kaggle | Hyperparamètrès complexes |
 | **SVM** | Classification | Efficace en haute dimension | Lent sur grands datasets |
 | **K-Means** | Clustering | Simple, rapide | Nombre de clusters à fixer à l'avance |
 | **Réseau de neurones** | Tout type | Universel, très puissant | Données volumineuses requises, boîte noire |
@@ -449,11 +449,11 @@ print(classification_report(y_test, y_pred))
 
 ---
 
-### Hyperparamètres et optimisation
+### Hyperparamètrès et optimisation
 
-Les **hyperparamètres** sont les paramètres que l'on fixe **avant** l'entraînement (contrairement aux paramètres appris par le modèle).
+Les **hyperparamètres** sont les paramètrès que l'on fixe **avant** l'entraînement (contrairement aux paramètrès appris par le modèle).
 
-| Algorithme | Hyperparamètres courants |
+| Algorithme | Hyperparamètrès courants |
 |-----------|--------------------------|
 | Random Forest | `n_estimators`, `max_depth`, `min_samples_split` |
 | XGBoost | `learning_rate`, `n_estimators`, `max_depth`, `subsample` |
@@ -479,12 +479,12 @@ grid_search = GridSearchCV(
     n_jobs=-1
 )
 grid_search.fit(X_train, y_train)
-print("Meilleurs paramètres :", grid_search.best_params_)
+print("Meilleurs paramètrès :", grid_search.best_params_)
 ```
 
 ---
 
-### Fine-tuning — Adapter un modèle pré-entraîné
+### Fine-tuning — adapter un modèle pré-entraîné
 
 Le **fine-tuning** consiste à prendre un modèle déjà entraîné sur une grande quantité de données (modèle pré-entraîné) et à le **réentraîner partiellement** sur vos propres données spécifiques pour l'adapter à votre tâche.
 
@@ -537,7 +537,7 @@ base_model = MobileNetV2(
 # 2. Geler les couches du modèle de base (feature extraction)
 base_model.trainable = False
 
-# 3. Ajouter notre propre tête de classification
+# 3. ajouter notre propre tête de classification
 x = base_model.output
 x = layers.GlobalAveragePooling2D()(x)
 x = layers.Dense(128, activation="relu")(x)
@@ -611,10 +611,10 @@ Pour les très grands modèles (LLaMA, Mistral, GPT...), le fine-tuning complet 
 
 | Technique | Description | Coût |
 |-----------|-------------|------|
-| **LoRA** (Low-Rank Adaptation) | Ajouter de petites matrices d'adaptation sans modifier les poids originaux | Très faible |
+| **LoRA** (Low-Rank Adaptation) | ajouter de petites matrices d'adaptation sans modifier les poids originaux | Très faible |
 | **QLoRA** | LoRA + quantification 4-bit | Encore plus faible — faisable sur 1 GPU grand public |
-| **Prefix Tuning** | Ajouter des tokens virtuels entraînables en début de séquence | Faible |
-| **Adapter layers** | Insérer de petites couches entre les couches existantes | Faible |
+| **Prefix Tuning** | ajouter des tokens virtuels entraînables en début de séquence | Faible |
+| **adapter layers** | Insérer de petites couches entre les couches existantes | Faible |
 
 ```python
 # Exemple avec PEFT + LoRA (Hugging Face)
@@ -631,7 +631,7 @@ lora_config = LoraConfig(
 peft_model = get_peft_model(model, lora_config)
 peft_model.print_trainable_parameters()
 # → "trainable params: 294,912 || all params: 109,776,128 || trainable%: 0.27"
-# Seulement 0.27% des paramètres sont entraînés !
+# Seulement 0.27% des paramètrès sont entraînés !
 ```
 
 ---
@@ -642,7 +642,7 @@ peft_model.print_trainable_parameters()
 |----------|-----------------|------|-----------------|
 | **Prompt Engineering** | Le modèle est déjà bon avec des instructions claires | Nul | Aucune |
 | **Few-shot prompting** | Quelques exemples suffisent dans le prompt | Nul | 5–20 exemples |
-| **RAG** (Retrieval-Augmented Generation) | Besoin de connaissances actualisées ou propriétaires | Faible | Documents à indexer |
+| **RAG** (Retrieval-Augmented génération) | Besoin de connaissances actualisées ou propriétaires | Faible | Documents à indexer |
 | **Fine-tuning** | Style, format ou domaine très spécifique | Moyen | 100 à 10 000 exemples |
 | **Pré-entraînement from scratch** | Domaine totalement nouveau, budget important | Très élevé | Millions d'exemples |
 
@@ -666,9 +666,9 @@ peft_model.print_trainable_parameters()
 | Métrique | Formule | Quand l'utiliser |
 |----------|---------|-----------------|
 | **Accuracy** | (TP + TN) / Total | Classes équilibrées |
-| **Precision** | TP / (TP + FP) | Minimiser les faux positifs (spam, pub) |
+| **précision** | TP / (TP + FP) | Minimiser les faux positifs (spam, pub) |
 | **Recall** | TP / (TP + FN) | Minimiser les faux négatifs (cancer, fraude) |
-| **F1-Score** | 2 × (P × R) / (P + R) | Équilibre precision/recall |
+| **F1-Score** | 2 × (P × R) / (P + R) | Équilibre précision/recall |
 | **AUC-ROC** | Aire sous la courbe ROC | Comparaison de modèles |
 
 > **Exemple crucial** : pour détecter une maladie grave, le **recall** est prioritaire (on préfère un faux positif à un faux négatif — mieux vaut une fausse alarme qu'un cas manqué).
@@ -869,8 +869,8 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```bash
 # Construire et lancer
-docker build -t mon-modele-api .
-docker run -p 8000:8000 mon-modele-api
+docker build -t mon-modèle-api .
+docker run -p 8000:8000 mon-modèle-api
 ```
 
 </details>
@@ -968,7 +968,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    subgraph CREATION["1️⃣ Création / Collecte"]
+    subgraph création["1️⃣ Création / Collecte"]
         C1["Capteurs, formulaires\nAPIs, logs, scraping"]
     end
     subgraph STOCKAGE["2️⃣ Stockage"]
@@ -984,7 +984,7 @@ flowchart LR
         D1["Suppression définitive\nAnonymisation\nPseudonymisation"]
     end
 
-    CREATION --> STOCKAGE --> UTILISATION --> ARCHIVAGE --> SUPPRESSION
+    création --> STOCKAGE --> UTILISATION --> ARCHIVAGE --> SUPPRESSION
     UTILISATION -- "Données obsolètes\nou inutilisables" --> SUPPRESSION
     ARCHIVAGE -- "Données réutilisables\npour réentraînement" --> UTILISATION
 ```
@@ -1010,7 +1010,7 @@ Une **politique de rétention** définit combien de temps chaque type de donnée
 | Type de donnée | Durée de rétention typique | Justification |
 |----------------|---------------------------|---------------|
 | Données d'entraînement brutes | 1 à 5 ans | Permettre le réentraînement et l'audit |
-| Données de production (logs) | 6 mois à 2 ans | Debugging, monitoring, drift detection |
+| Données de production (logs) | 6 mois à 2 ans | Debugging, monitoring, drift détection |
 | Données personnelles (RGPD) | Durée minimale nécessaire | Obligation légale — droit à l'oubli |
 | Modèles entraînés | Aussi longtemps que déployés + 1 an | Reproductibilité, audit |
 | Données médicales | 10 à 20 ans (selon pays) | Obligation réglementaire |
@@ -1193,7 +1193,7 @@ flowchart LR
 | **Registry de modèles** | MLflow Registry, Hugging Face Hub | Stocker et gérer les versions de modèles |
 | **Serving** | FastAPI, TF Serving, BentoML | Exposer les modèles comme APIs |
 | **Monitoring** | Evidently, Grafana, Prometheus | Surveiller les performances en production |
-| **Conteneurs** | Docker, Kubernetes | Packager et scaler les déploiements |
+| **Conteneurs** | Docker, Kubernetes | Packager et scaler les Déploiements |
 
 </details>
 
@@ -1346,7 +1346,7 @@ PHASE 3 — PRÉPARATION DES DONNÉES
 PHASE 4 — MODÉLISATION
 - Algorithme(s) envisagé(s) : 
 - Justification du choix : 
-- Hyperparamètres à explorer : 
+- Hyperparamètrès à explorer : 
 
 PHASE 5 — ÉVALUATION
 - Métriques choisies et justification : 
