@@ -345,34 +345,45 @@ L'écosystème IA est composé de **chercheurs, entreprises, gouvernements, star
 
 #### Les grandes puissances IA
 
+**États-Unis**
+
 ```mermaid
 flowchart TD
-    subgraph USA["🇺🇸 États-Unis"]
-        direction TB
-        U1["OpenAI — GPT, ChatGPT, o1"]
-        U2["Google DeepMind — Gemini, AlphaFold, AlphaGo"]
-        U3["Meta AI — LLaMA, PyTorch"]
-        U4["Microsoft — Azure AI, Copilot"]
-        U5["Amazon — AWS AI, Alexa, Bedrock"]
-        U6["Apple — Core ML, on-device AI"]
-        U7["Anthropic — Claude"]
-        U8["NVIDIA — GPU, CUDA, NIM"]
-    end
-    subgraph CHINA["🇨🇳 Chine"]
-        direction TB
-        C1["Baidu — ERNIE Bot"]
-        C2["Alibaba — Qwen, Tongyi"]
-        C3["Huawei — Ascend AI chips"]
-        C4["ByteDance — Doubao, TikTok AI"]
-        C5["DeepSeek — Modèles open source compétitifs"]
-    end
-    subgraph EU["🇪🇺 Europe"]
-        direction TB
-        E1["Mistral AI 🇫🇷 — Modèles open source"]
-        E2["SAP 🇩🇪 — AI for enterprise"]
-        E3["Siemens 🇩🇪 — Industrial AI"]
-        E4["IDEMIA 🇫🇷 — Biométrie, identité"]
-    end
+    USA["États-Unis — Acteurs majeurs"]
+    USA --> U1["OpenAI\nGPT-4o, ChatGPT, o1, o3"]
+    USA --> U2["Google DeepMind\nGemini, AlphaFold, AlphaGo"]
+    USA --> U3["Meta AI\nLLaMA, PyTorch, SAM"]
+    USA --> U4["Microsoft\nAzure AI, Copilot, OpenAI partner"]
+    USA --> U5["Amazon\nAWS Bedrock, Alexa, Titan"]
+    USA --> U6["Apple\nCore ML, Apple Intelligence, on-device AI"]
+    USA --> U7["Anthropic\nClaude 3.5 / Claude 4"]
+    USA --> U8["NVIDIA\nGPU H100/H200, CUDA, NIM, DGX"]
+```
+
+**Chine**
+
+```mermaid
+flowchart TD
+    CHINA["Chine — Acteurs majeurs"]
+    CHINA --> C1["Baidu\nERNIE Bot, PaddlePaddle"]
+    CHINA --> C2["Alibaba\nQwen, Tongyi Qianwen"]
+    CHINA --> C3["Huawei\nAscend AI chips, MindSpore"]
+    CHINA --> C4["ByteDance\nDoubao, TikTok AI, Janus"]
+    CHINA --> C5["DeepSeek\nModèles open source très compétitifs\n(DeepSeek-V3, R1)"]
+    CHINA --> C6["Tencent\nHunyuan, WeChat AI"]
+```
+
+**Europe**
+
+```mermaid
+flowchart TD
+    EU["Europe — Acteurs majeurs"]
+    EU --> E1["Mistral AI — France\nMistral Large, Mixtral\nModèles open source compétitifs"]
+    EU --> E2["Hugging Face — France / USA\nPlateforme de modèles open source\nTransformers, Datasets, Spaces"]
+    EU --> E3["SAP — Allemagne\nJoule AI, AI for enterprise ERP"]
+    EU --> E4["Siemens — Allemagne\nIndustrial AI, manufacturing"]
+    EU --> E5["IDEMIA — France\nBiométrie, identité numérique"]
+    EU --> E6["Aleph Alpha — Allemagne\nModèles souverains européens"]
 ```
 
 ---
@@ -396,32 +407,108 @@ flowchart TD
 
 ### Acteurs locaux et régionaux
 
+```mermaid
+flowchart TD
+    WORLD["Écosystèmes IA\nlocaux et régionaux"]
+    WORLD --> CAN["Canada"]
+    WORLD --> QC["Québec / Montréal"]
+    WORLD --> FR["France"]
+    WORLD --> USA_R["États-Unis\n(institutions)"]
+    WORLD --> MY["Malaisie"]
+    WORLD --> BE["Belgique"]
+```
+
+---
+
 #### Canada
 
-| Acteur | Rôle dans l'IA |
-|--------|----------------|
-| **Mila** (Montréal) | Institut de recherche en IA fondé par Yoshua Bengio — un des plus importants au monde |
-| **Vector Institute** (Toronto) | Recherche en Deep Learning, fondé par Geoffrey Hinton |
-| **CIFAR** | Financement de la recherche fondamentale en IA |
-| **Cohere** | Startup canadienne — LLMs pour entreprises |
-| **Element AI** (acquis par ServiceNow) | IA pour entreprises |
-| **Coveo** | IA pour la recherche et recommandation |
+```mermaid
+flowchart TD
+    CAN2["Canada — Écosystème IA"]
+    CAN2 --> CA1["Mila — Montréal\nInstitut de recherche fondé par Yoshua Bengio\nPlus de 1 000 chercheurs"]
+    CAN2 --> CA2["Vector Institute — Toronto\nRecherche en Deep Learning\nFondé par Geoffrey Hinton (Prix Turing 2018)"]
+    CAN2 --> CA3["CIFAR\nFinancement de la recherche\nfondamentale en IA"]
+    CAN2 --> CA4["Cohere — Toronto\nLLMs pour entreprises\nFondé par d'anciens chercheurs Google"]
+    CAN2 --> CA5["Coveo — Québec\nIA pour la recherche\net la recommandation"]
+    CAN2 --> CA6["Element AI\nAcquis par ServiceNow\nIA pour entreprises"]
+```
 
-> Le Canada est reconnu comme une **superpuissance mondiale en recherche IA**, notamment grâce à Montréal et Toronto.
+> Le Canada est reconnu comme une **superpuissance mondiale en recherche IA**, notamment grâce à Montréal et Toronto. Deux des trois pères du Deep Learning (Bengio et Hinton) y travaillent.
+
+---
 
 #### Québec / Montréal
 
-- **Mila** — plus de 1 000 chercheurs, Yoshua Bengio (Prix Turing 2018)
-- **Scale AI** — grappe d'innovation en IA financée par le gouvernement fédéral
-- **IVADO** — Institut de valorisation des données (HEC, Polytechnique, Université de Montréal)
-- **Startups** : Imagia, Dialogue, Osedea, Intact Lab, Desjardins Lab IA
+```mermaid
+flowchart TD
+    QC2["Québec / Montréal — Écosystème IA"]
+    QC2 --> Q1["Mila\nPlus de 1 000 chercheurs\nYoshua Bengio — Prix Turing 2018\nRecherche fondamentale en Deep Learning"]
+    QC2 --> Q2["Scale AI\nGrappe d'innovation en IA\nFinancée par le gouvernement fédéral\nCoordonne les projets IA industriels"]
+    QC2 --> Q3["IVADO\nInstitut de valorisation des données\nPartenariat HEC, Polytechnique\nUniversité de Montréal"]
+    QC2 --> Q4["Startups\nImagia — IA médicale\nDialogue — santé numérique\nOsedea — développement IA sur mesure\nIntact Lab — assurance et IA\nDesjardins Lab IA — finance et IA"]
+    QC2 --> Q5["Universités\nUniversité de Montréal\nPolytechnique Montréal\nMcGill University\nÉTS — École de technologie supérieure"]
+```
+
+---
 
 #### France
 
-- **INRIA** — Institut national de recherche en informatique et automatique
-- **Mistral AI** — startup française parmi les meilleures au monde en LLMs open source
-- **LightOn** — IA pour entreprises
-- **Yann LeCun** — Père du Deep Learning, Chief AI Scientist chez Meta, originaire de France
+```mermaid
+flowchart TD
+    FR2["France — Écosystème IA"]
+    FR2 --> F1["INRIA\nInstitut national de recherche\nen informatique et automatique\nRecherche publique de premier plan"]
+    FR2 --> F2["Mistral AI — Paris\nLLMs open source compétitifs\nMistral Large, Mixtral, Le Chat\nParmi les meilleurs modèles mondiaux"]
+    FR2 --> F3["Hugging Face\nFondé à Paris, basé à New York\nPlateforme open source de référence\nPour les modèles IA (transformers, datasets)"]
+    FR2 --> F4["LightOn — Paris\nIA générative pour entreprises\nSolutions on-premise"]
+    FR2 --> F5["Yann LeCun\nPère du Deep Learning — CNN\nChief AI Scientist chez Meta\nPrix Turing 2018 — originaire de France"]
+    FR2 --> F6["Criteo\nIA pour la publicité numérique\nCoté en bourse"]
+```
+
+---
+
+#### États-Unis — Institutions de recherche
+
+```mermaid
+flowchart TD
+    USA2["États-Unis — Institutions & Universités"]
+    USA2 --> U_MIT["MIT — Massachusetts Institute of Technology\nCSAIL — Computer Science and AI Lab\nRecherche de pointe en robotique et IA"]
+    USA2 --> U_STAN["Stanford University\nHuman-Centered AI Institute (HAI)\nNombreux pionniers formés ici (Fei-Fei Li)"]
+    USA2 --> U_CMU["Carnegie Mellon University\nLanguage Technologies Institute\nRobotics Institute — référence mondiale"]
+    USA2 --> U_BERK["UC Berkeley\nBEAIR Group, BAIR Lab\nRecherche en RL et sécurité IA"]
+    USA2 --> U_OAI["OpenAI — San Francisco\nLaboratoire privé — GPT, o1, DALL-E, Sora"]
+    USA2 --> U_DM["Google DeepMind — Mountain View\nAlphaGo, AlphaFold, Gemini"]
+    USA2 --> U_FAIR["Meta FAIR\nFundamental AI Research\nLLaMA, PyTorch, SAM, Segment Anything"]
+    USA2 --> U_MSR["Microsoft Research\nRecherche en NLP, vision, agents\nPartenariat stratégique OpenAI"]
+```
+
+---
+
+#### Malaisie
+
+```mermaid
+flowchart TD
+    MY2["Malaisie — Écosystème IA"]
+    MY2 --> M1["MDEC\nMalaysia Digital Economy Corporation\nAgence gouvernementale pour\nle numérique et l'IA"]
+    MY2 --> M2["Gouvernement numérique\nMalaysia AI Roadmap 2021-2025\nInvestissements dans l'IA nationale"]
+    MY2 --> M3["Universités\nUniversiti Malaya (UM)\nUniversiti Teknologi Malaysia (UTM)\nUniversiti Putra Malaysia (UPM)"]
+    MY2 --> M4["Startups & Industrie\nAirAsia — IA pour aviation et logistique\nCelcom Axiata — IA Telecom\nMaxis — IA pour réseaux 5G"]
+    MY2 --> M5["Centres de données\nHubs régionaux pour\nGoogle, Microsoft, AWS en Asie du Sud-Est"]
+    MY2 --> M6["NVIDIA AI Hub\nPartenariat pour former\nles talents IA en Malaisie"]
+```
+
+---
+
+#### Belgique
+
+```mermaid
+flowchart TD
+    BE2["Belgique — Écosystème IA"]
+    BE2 --> B1["Universités de recherche\nKU Leuven — AI Lab, recherche en NLP et vision\nULB — Machine Learning Group\nUGent — IDLAB — recherche en données et IA"]
+    BE2 --> B2["imec — Leuven\nCentre de recherche en microélectronique\nChips IA et edge computing\nPartenariats avec TSMC et Intel"]
+    BE2 --> B3["Institutions européennes\nBruxelles — siège de la Commission européenne\nRèglementation IA — AI Act\nGPAI — Global Partnership on AI"]
+    BE2 --> B4["Startups & Entreprises\nCognito — IA pour le droit\nYazzoom — vision industrielle\nML6 — consulting IA (Data & AI services)"]
+    BE2 --> B5["Centres de compétences\nFlandre — AI Flanders\nWallonie — DigitalWallonia\nBruxelles — hub.brussels"]
+```
 
 </details>
 
