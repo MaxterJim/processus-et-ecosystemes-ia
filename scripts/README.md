@@ -72,11 +72,23 @@ Avant de lancer un script, vous devez « entrer » dans le dossier du projet. La
 
 **Méthode manuelle** (si vous ouvrez PowerShell normalement) :
 
+La commande `cd` sert à se déplacer dans un dossier. Remplacez le chemin ci-dessous par **celui de votre propre dossier de projet** :
+
 ```powershell
-cd "C:\Users\VotreNom\Downloads\FastAPI-EN-main (4)\FastAPI-EN-main"
+cd "chemin\vers\votre\dossier\de\projet"
 ```
 
-> **Attention** : utilisez des **guillemets** `"..."` si votre chemin contient des espaces ou des parenthèses.
+Exemples concrets selon l'endroit où se trouve votre projet :
+
+```powershell
+cd C:\Projets\MonProjet
+cd "C:\Mes Documents\Cours\FastAPI"
+cd D:\Travaux\projet-ia
+```
+
+> **Astuce sans se tromper** : dans l'Explorateur Windows, ouvrez votre dossier de projet, cliquez dans la **barre d'adresse** en haut, copiez le chemin affiché (`Ctrl + C`), puis dans PowerShell tapez `cd ` (suivi d'un espace) et collez avec **clic droit**.
+>
+> **Attention** : utilisez des **guillemets** `"..."` autour du chemin s'il contient des **espaces** ou des **parenthèses**.
 
 Pour vérifier que vous êtes au bon endroit, tapez :
 
