@@ -1,0 +1,40 @@
+# =============================================================================
+# requirements.txt — Liste des dépendances du projet
+# -----------------------------------------------------------------------------
+# Les versions ne sont PAS figées (pas de ==) pour que les débutants
+# récupèrent toujours la dernière version compatible avec Python 3.12.
+#
+# Installation manuelle (si le script PowerShell n'a pas pu s'exécuter) :
+#   py -3.12 -m venv myfastapienv
+#   .\myfastapienv\Scripts\Activate.ps1
+#   python -m pip install --upgrade pip setuptools wheel
+#   pip install -r scripts\requirements.txt
+# =============================================================================
+
+# --- Backend FastAPI ---------------------------------------------------------
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pydantic-settings
+
+# --- Frontend Streamlit ------------------------------------------------------
+streamlit
+
+# --- Clients HTTP / API ------------------------------------------------------
+requests
+httpx
+
+# --- Data science & Machine Learning (niveau débutant) -----------------------
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+plotly
+openpyxl
+
+# --- Développement & qualité -------------------------------------------------
+python-dotenv
+jupyter
+ipykernel
