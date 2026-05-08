@@ -1,8 +1,6 @@
 <a id="top"></a>
 
-# Correction complète — Mini-lab 2
-
-# Application de visualisation de données CSV avec Streamlit
+# Correction complète du Mini-lab 1 - Application de visualisation de données CSV avec Streamlit
 
 ## Cas utilisé : fichier CSV Yahoo Finance
 
