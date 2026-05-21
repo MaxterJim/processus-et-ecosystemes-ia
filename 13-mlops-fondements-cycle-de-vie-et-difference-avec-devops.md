@@ -1,5 +1,3 @@
-Voici la traduction complète en français du travail fourni. 
-
 <a id="top"></a>
 
 # MLOps — Définition, importance et différence avec DevOps
