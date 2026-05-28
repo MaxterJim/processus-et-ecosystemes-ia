@@ -29,7 +29,7 @@ fastapi-step-by-step-recap-hello-fastapi-calculator/
 #    le serveur FastAPI est configuré (uvicorn écoute sur 0.0.0.0:8000,
 #    bind mount .:/app pour voir main.py et activer le hot reload).
 
-cd chap27-fastapi-step-by-step-recap-hello-fastapi-calculator
+cd fastapi-step-by-step-recap-hello-fastapi-calculator
 
 # 2. Démarre le serveur FastAPI en mode détaché.
 docker compose up -d --build
