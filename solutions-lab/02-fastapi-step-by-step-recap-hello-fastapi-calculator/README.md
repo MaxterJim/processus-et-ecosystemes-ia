@@ -1,7 +1,7 @@
-# chap27 - Step-by-step recap: Hello FastAPI (Calculatrice)
+# Step-by-step recap: Hello FastAPI (Calculatrice)
 
 > [!TIP]
-> **Objectif du chap27 — Faire tourner FastAPI pour la toute première fois.**
+> **Faire tourner FastAPI pour la toute première fois.**
 >
 > Tu vas :
 > 1. Construire et démarrer un serveur **FastAPI 100 % dans Docker** (aucun Python sur l'hôte).
