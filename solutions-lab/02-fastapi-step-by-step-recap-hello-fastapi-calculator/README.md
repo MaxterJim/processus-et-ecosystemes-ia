@@ -14,7 +14,7 @@
 ## Structure du projet
 
 ```
-chap27-fastapi-step-by-step-recap-hello-fastapi-calculator/
+fastapi-step-by-step-recap-hello-fastapi-calculator/
 ├── fastapi/
 │   └── Dockerfile              <- image Python 3.12 + fastapi + uvicorn
 ├── docker-compose.yml          <- service "fastapi" sur le port 8000
@@ -91,7 +91,7 @@ docker compose logs -f fastapi
 ## Recap
 
 ```bash
-cd chap27-fastapi-step-by-step-recap-hello-fastapi-calculator
+cd fastapi-step-by-step-recap-hello-fastapi-calculator
 docker compose up -d --build
 # -> http://localhost:8000/docs
 docker compose down
@@ -100,7 +100,7 @@ docker compose down
 ## Recap +
 
 ```bash
-cd chap27-fastapi-step-by-step-recap-hello-fastapi-calculator
+cd fastapi-step-by-step-recap-hello-fastapi-calculator
 docker compose up -d --build
 
 # Tester quelques endpoints :
