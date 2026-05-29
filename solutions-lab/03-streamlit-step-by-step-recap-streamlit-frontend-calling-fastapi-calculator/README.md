@@ -49,7 +49,7 @@ streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator/
 
 ## What's new vs chap27
 
-| | chap27 |  |
+| | Chapitre précédent|  Ce chapitre|
 |---|---|---|
 | Services | `fastapi` seul | `fastapi` + `streamlit` |
 | Réseau | défaut | `calc-net` (bridge dédié) |
