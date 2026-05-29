@@ -1,7 +1,7 @@
-# chap28 - Step-by-step recap: Streamlit frontend calling FastAPI calculator
+#  - Step-by-step recap: Streamlit frontend calling FastAPI calculator
 
 > [!TIP]
-> **Objectif du chap28 — Faire dialoguer DEUX conteneurs : un front Streamlit qui appelle le backend FastAPI du chap27.**
+> **Objectif  — Faire dialoguer DEUX conteneurs : un front Streamlit qui appelle le backend FastAPI du chap27.**
 >
 > Tu vas :
 > 1. Réutiliser exactement la calculatrice FastAPI du chap27 (`main.py`, port 8000).
@@ -15,7 +15,7 @@
 ## Structure du projet
 
 ```
-chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator/
+streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator/
 ├── fastapi/
 │   └── Dockerfile              <- python:3.12-slim + fastapi + uvicorn
 ├── streamlit/
@@ -49,7 +49,7 @@ chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculato
 
 ## What's new vs chap27
 
-| | chap27 | chap28 |
+| | chap27 |  |
 |---|---|---|
 | Services | `fastapi` seul | `fastapi` + `streamlit` |
 | Réseau | défaut | `calc-net` (bridge dédié) |
@@ -65,7 +65,7 @@ chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculato
 #    pour comprendre comment les deux services sont configures et comment
 #    Streamlit appelle FastAPI via le reseau Docker interne.
 
-cd chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
+cd streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
 
 # 2. Demarre les DEUX services en mode detache (build + up).
 docker compose up -d --build
@@ -104,7 +104,7 @@ docker compose exec streamlit python -c "import requests; print(requests.get('ht
 ## Recap
 
 ```bash
-cd chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
+cd streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
 docker compose up -d --build
 # -> http://localhost:8501  (front)
 # -> http://localhost:8000/docs  (backend Swagger)
@@ -114,7 +114,7 @@ docker compose down
 ## Recap +
 
 ```bash
-cd chap28-streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
+cd streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator
 docker compose up -d --build
 
 # Verifier que les 2 conteneurs tournent :
