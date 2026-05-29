@@ -1,7 +1,7 @@
-# chap30 - Step-by-step recap: PostgreSQL history with SQLAlchemy
+#  Step-by-step recap: PostgreSQL history with SQLAlchemy
 
 > [!TIP]
-> **Objectif du chap30 — Persister l'historique des calculs dans une vraie base PostgreSQL.**
+> **Objectif du  Persister l'historique des calculs dans une vraie base PostgreSQL.**
 >
 > Tu vas :
 > 1. Ajouter un **3ème service** dans `docker-compose.yml` : `postgres:16-alpine` avec un bind mount `./pgdata` pour que les données survivent à `docker compose down`.
@@ -16,7 +16,7 @@
 ## Structure du projet
 
 ```
-chap30-fastapi-step-by-step-recap-postgres-history-with-sqlalchemy/
+fastapi-step-by-step-recap-postgres-history-with-sqlalchemy/
 ├── fastapi/
 │   ├── Dockerfile              <- python:3.12 + fastapi + sqlalchemy + psycopg
 │   └── requirements.txt
@@ -45,9 +45,9 @@ chap30-fastapi-step-by-step-recap-postgres-history-with-sqlalchemy/
                                                        <-- reseau Docker calc-net (DNS interne) --->
 ```
 
-## What's new vs chap29
+## What's new 
 
-| | chap29 | chap30 |
+| | chapitre précédent | ce chapitre |
 |---|---|---|
 | Services | `fastapi` + `streamlit` | **`postgres`** + `fastapi` + `streamlit` |
 | Persistance | aucune (RAM) | **PostgreSQL** + bind mount `./pgdata` |
@@ -108,7 +108,7 @@ def calculate(payload: CalculationRequest, db: Session = Depends(get_db)):
 ## Run it (100% Docker, no Python on the host)
 
 ```bash
-cd chap30-fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
+cd fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
 
 # 1. Build + up des 3 services. L'ordre est garanti par depends_on :
 #    postgres -> fastapi (quand healthy) -> streamlit (quand fastapi healthy).
@@ -158,7 +158,7 @@ docker compose exec streamlit python -c "import requests; print(requests.get('ht
 ## Recap
 
 ```bash
-cd chap30-fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
+cd fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
 docker compose up -d --build
 # -> http://localhost:8501          (front avec onglets Calculer / Historique)
 # -> http://localhost:8000/docs     (Swagger : /calculate /history /history DELETE)
@@ -169,7 +169,7 @@ docker compose down
 ## Recap +
 
 ```bash
-cd chap30-fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
+cd fastapi-step-by-step-recap-postgres-history-with-sqlalchemy
 docker compose up -d --build
 
 # Verifier que les 3 conteneurs tournent et sont healthy :
