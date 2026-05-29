@@ -1,0 +1,68 @@
+
+==> Étape 1 - Démarrer Docker Desktop
+
+==> Étape 2 - Créer un dossier dans votre ordinateur 
+
+demo2/
+├── fastapi/
+│   └── Dockerfile              
+├── streamlit/
+│   ├── Dockerfile             
+│   └── requirements.txt
+├── docker-compose.yml         
+├── main.py                    
+├── app.py                      
+
+
+Explications rapide de l'architecture
+
+demo2/
+├── fastapi/
+│   └── Dockerfile              <- python:3.12-slim + fastapi + uvicorn
+├── streamlit/
+│   ├── Dockerfile              <- python:3.12-slim + streamlit + requests
+│   └── requirements.txt
+├── docker-compose.yml          <- 2 services + réseau partagé "calc-net"
+├── main.py                     <- backend FastAPI (4 endpoints calculatrice)
+├── app.py                      <- front Streamlit qui appelle le backend
+
+
+
+==> Étape 3 - Il faut se placer dans la racine du projet  (demo2)
+
+- Ouvrir le terminal 
+- Exécutez la commandea suivante pour lancer l'ensemble de l'architecture :
+
+Commande #1 : docker compose up -d --build
+Commande #2 : docker compose ps
+
+ou
+
+Commande #1 : docker compose build
+Commande #2 : docker compose up -d fastapi streamlit
+Commande #3 : docker compose ps
+
+
+==> Étape 4 - Observer le Front-end et le Back-end 
+
+FRONT
+http://localhost:8501
+
+BACK
+http://localhost:8000
+http://localhost:8000/docs
+
+
+
+==> Étape 5 - Détruire l'architecture
+
+docker compose down
+
+==> Étape 6 - Répondre aux questions
+
+- ..
+
+
+
+
+
