@@ -65,4 +65,14 @@ docker compose down
 
 
 
+# Annexe - méthodologie d'apprentissage
+
+01 - Pratiquer la configuration (technicité de faire marcher un projet)
+02 - Tester avec l'interface swagger + UI (streamlit)
+03 - Comprendre mes docker-compose et Dockerfile
+04 - Faire mon propre projet 
+05 - Ajouter du machine learning  
+
+
+
 
