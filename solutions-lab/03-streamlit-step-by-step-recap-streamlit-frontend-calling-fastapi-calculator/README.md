@@ -47,7 +47,7 @@ streamlit-step-by-step-recap-streamlit-frontend-calling-fastapi-calculator/
 >
 > Sur un même réseau Docker (`calc-net`), chaque service est joignable par **son nom de service** (`fastapi`) qui est résolu en DNS interne. C'est la même idée que `mlflow` + `trainer` dans le `chap04`.
 
-## What's new vs chap27
+## What's new
 
 | | Chapitre précédent|  Ce chapitre|
 |---|---|---|
