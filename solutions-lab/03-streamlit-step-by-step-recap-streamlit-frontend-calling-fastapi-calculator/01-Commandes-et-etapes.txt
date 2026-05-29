@@ -14,7 +14,8 @@ demo2/
 ├── app.py                      
 
 
-Explications rapide de l'architecture
+- Pur vérifier l'arboresence tapez la commande suivante : tree /F
+- Explications rapide de l'architecture
 
 demo2/
 ├── fastapi/
